@@ -1,2 +1,2 @@
-# github_client
-Github client for android. TP 2016
+# shomstagram
+Instagram custom client for android. TP 2016
