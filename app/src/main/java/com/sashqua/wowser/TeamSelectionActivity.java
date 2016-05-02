@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.content.Intent;
 
 public class TeamSelectionActivity extends AppCompatActivity {
 
@@ -24,6 +25,10 @@ public class TeamSelectionActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    public void startService(View v){
+        startService(new Intent(this, ApiService.class));
     }
 
 }
