@@ -1,10 +1,12 @@
 package com.sashqua.wowser.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
@@ -24,8 +26,7 @@ public class TeamSelectionActivity extends NetBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_selection);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        requestTeams();
     }
 
     @Override
@@ -37,7 +38,7 @@ public class TeamSelectionActivity extends NetBaseActivity {
 
     }
 
-    public void requestTeams(View view){
+    public void requestTeams(){
         requestId = getServiceHelper().getTeams(398);
     }
 
@@ -51,8 +52,17 @@ public class TeamSelectionActivity extends NetBaseActivity {
             Collections.sort(clubNames);
 
             ListView lv = (ListView) findViewById(R.id.listView);
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_list_item_1, clubNames);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_single_choice, clubNames){
+
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = super.getView(position, convertView, parent);
+                    ((TextView) v).setTextColor(Color.WHITE);
+                    return v;
+                }
+
+            };
 
             lv.setAdapter(adapter);
         }
