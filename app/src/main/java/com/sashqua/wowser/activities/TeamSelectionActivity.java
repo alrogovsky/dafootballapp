@@ -1,16 +1,19 @@
 package com.sashqua.wowser.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
 import com.sashqua.wowser.models.TeamList;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TeamSelectionActivity extends NetBaseActivity {
 
@@ -23,15 +26,6 @@ public class TeamSelectionActivity extends NetBaseActivity {
         setContentView(R.layout.activity_team_selection);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -49,9 +43,18 @@ public class TeamSelectionActivity extends NetBaseActivity {
 
     private void updateTeams(){
         if(teams != null){
+            List<String> clubNames = new ArrayList<String>();
             for(TeamList.Team t : teams.getTeams()){
-                Log.d("POKEKALI", t.getName());
+                clubNames.add(t.getName());
             }
+
+            Collections.sort(clubNames);
+
+            ListView lv = (ListView) findViewById(R.id.listView);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_list_item_1, clubNames);
+
+            lv.setAdapter(adapter);
         }
     }
 
