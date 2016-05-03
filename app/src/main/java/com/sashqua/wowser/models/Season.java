@@ -1,7 +1,7 @@
 package com.sashqua.wowser.models;
 
 public class Season {
-    public int id;
+    public long id;
     public String caption;
     public String league;
     public String year;

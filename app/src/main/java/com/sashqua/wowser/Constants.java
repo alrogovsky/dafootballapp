@@ -8,10 +8,12 @@ public final class Constants {
 
     public final static class Data {
         public static final String EXTRA_LEAGUE_ID = "com.sashqua.wowser.extra.LEAGUE_ID";
+        public static final String EXTRA_SEASON = "com.sashqua.wowser.extra.SEASON";
     }
 
     public final static class Action {
         public static final String GET_TEAMS = "com.sashqua.wowser.actions.GET_TEAMS";
+        public static final String GET_SEASONS = "com.sashqua.wowser.actions.GET_SEASONS";
     }
 
     public static final class Codes {

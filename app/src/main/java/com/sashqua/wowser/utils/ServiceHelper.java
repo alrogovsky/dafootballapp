@@ -63,6 +63,16 @@ public class ServiceHelper implements ServiceCallbackListener {
         return requestId;
     }
 
+    public int getSeasons(String season){
+        final int requestId = createId();
+        Intent intent = createIntent(Constants.Action.GET_SEASONS, requestId);
+        intent.putExtra(Constants.Data.EXTRA_SEASON, season);
+
+        application.startService(intent);
+
+        return requestId;
+    }
+
     @Override
     public void onServiceCallback(int requestId, int resultCode, Bundle bundle){
     }

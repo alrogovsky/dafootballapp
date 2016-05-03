@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.os.ResultReceiver;
 
+import com.sashqua.wowser.models.Season;
 import com.sashqua.wowser.models.TeamList;
 import com.sashqua.wowser.utils.Processor;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NetService extends IntentService {
@@ -32,6 +37,9 @@ public class NetService extends IntentService {
             if(Constants.Action.GET_TEAMS.equals(action)){
                 final long id = intent.getLongExtra(Constants.Data.EXTRA_LEAGUE_ID, -1);
                 handleGetTeams(receiver, id);
+            } else if(Constants.Action.GET_SEASONS.equals(action)){
+                final String season = intent.getStringExtra(Constants.Data.EXTRA_SEASON);
+                handleGetSeasons(receiver, season);
             }
 
         }
@@ -42,6 +50,17 @@ public class NetService extends IntentService {
         if(teams != null){
             Bundle bundle = new Bundle();
             bundle.putSerializable("teams", teams);
+            receiver.send(Constants.Codes.CODE_OK, bundle);
+        } else {
+            receiver.send(Constants.Codes.CODE_FAIL, null);
+        }
+    }
+
+    private void handleGetSeasons(ResultReceiver receiver, String season){
+        ArrayList<Season> seasons = processor.getSeason(season);
+        if(seasons != null){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("seasons", seasons);
             receiver.send(Constants.Codes.CODE_OK, bundle);
         } else {
             receiver.send(Constants.Codes.CODE_FAIL, null);
