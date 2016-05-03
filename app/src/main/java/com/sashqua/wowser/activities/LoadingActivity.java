@@ -9,7 +9,7 @@ import com.sashqua.wowser.R;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private final int WAIT_TIME = 2500;
+    private final int WAIT_TIME = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(LoadingActivity.this, TeamSelectionActivity.class);
+                Intent mainIntent = new Intent(LoadingActivity.this, StartNoTeamActivity.class);
                 LoadingActivity.this.startActivity(mainIntent);
                 LoadingActivity.this.finish();
             }
