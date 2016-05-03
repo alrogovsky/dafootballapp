@@ -19,7 +19,7 @@ public class LoadingActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(LoadingActivity.this, StartNoTeamActivity.class);
+                Intent mainIntent = new Intent(LoadingActivity.this, TeamSelectionActivity.class);
                 LoadingActivity.this.startActivity(mainIntent);
                 LoadingActivity.this.finish();
             }
