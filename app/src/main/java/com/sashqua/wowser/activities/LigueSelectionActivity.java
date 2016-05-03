@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
+import com.sashqua.wowser.models.Team;
 import com.sashqua.wowser.models.TeamList;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class LigueSelectionActivity extends NetBaseActivity {
     private void updateTeams(){
         if(teams != null){
             List<String> clubNames = new ArrayList<String>();
-            for(TeamList.Team t : teams.getTeams()){
+            for(Team t : teams.getTeams()){
                 clubNames.add(t.getName());
             }
 

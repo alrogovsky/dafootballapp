@@ -1,6 +1,8 @@
 package com.sashqua.wowser.utils;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sashqua.wowser.Constants;
@@ -24,8 +26,8 @@ public class Processor {
         footballApi = retrofit.create(FootballApi.class);
     }
 
-    public List<Season> getSeason(String s){
-        Response<List<Season>> response;
+    public ArrayList<Season> getSeason(String s){
+        Response<ArrayList<Season>> response;
         try{
             response = footballApi.getSeasons(s).execute();
         } catch (IOException e) {
