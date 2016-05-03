@@ -23,10 +23,12 @@ import com.sashqua.wowser.models.FixtureList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class MainActivity extends NetBaseActivity {
 
     private long teamId;
+    private String teamName;
     private int requestId = -1;
     private FixtureList fixtures;
     private ListView lv;
@@ -41,9 +43,10 @@ public class MainActivity extends NetBaseActivity {
         SharedPreferences sPref;
         sPref = getSharedPreferences("TEST", MODE_PRIVATE);
         teamId = sPref.getLong(Constants.Data.SAVED_TEAM_ID, 0);
+        teamName = sPref.getString(Constants.Data.SAVED_TEAM_NAME, "ERROR");
 
         TextView tv1 = (TextView)findViewById(R.id.textView3);
-        tv1.setText("id=" + teamId);
+        tv1.setText(teamName);
 
         getFixtures();
     }
@@ -69,7 +72,7 @@ public class MainActivity extends NetBaseActivity {
                     View v = super.getView(position, convertView, parent);
                     ((TextView) v).setTextColor(Color.WHITE);
                     ((TextView) v).setGravity(Gravity.CENTER);
-                    ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+                    ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                     return v;
                 }
 

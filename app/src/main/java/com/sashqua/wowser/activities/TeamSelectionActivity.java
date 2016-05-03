@@ -112,6 +112,7 @@ public class TeamSelectionActivity extends NetBaseActivity {
         SharedPreferences.Editor ed = sPref.edit();
         Log.d("KEK", "PUT ID " + chosenTeam.getId());
         ed.putLong(Constants.Data.SAVED_TEAM_ID, chosenTeam.getId());
+        ed.putString(Constants.Data.SAVED_TEAM_NAME, chosenTeam.getName());
         ed.commit();
 
         Intent intent = new Intent(TeamSelectionActivity.this, MainActivity.class);

@@ -8,6 +8,7 @@ public final class Constants {
 
     public final static class Data {
         public static final String SAVED_TEAM_ID = "team_id";
+        public static final String SAVED_TEAM_NAME = "team_name";
 
         public static final String EXTRA_LEAGUE_ID = "com.sashqua.wowser.extra.LEAGUE_ID";
         public static final String EXTRA_SEASON = "com.sashqua.wowser.extra.SEASON";
