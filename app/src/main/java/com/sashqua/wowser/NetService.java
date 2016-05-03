@@ -4,7 +4,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.os.ResultReceiver;
+import android.util.Log;
 
+import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.Season;
 import com.sashqua.wowser.models.TeamList;
 import com.sashqua.wowser.utils.Processor;
@@ -40,6 +42,10 @@ public class NetService extends IntentService {
             } else if(Constants.Action.GET_SEASONS.equals(action)){
                 final String season = intent.getStringExtra(Constants.Data.EXTRA_SEASON);
                 handleGetSeasons(receiver, season);
+            } else if(Constants.Action.GET_NEXT_FIXTURES.equals(action)){
+                final long id = intent.getLongExtra(Constants.Data.EXTRA_TEAM_ID, -1);
+                handleGetNextFixtures(receiver, id);
+                Log.d("KEK", "HANDLING");
             }
 
         }
@@ -61,6 +67,17 @@ public class NetService extends IntentService {
         if(seasons != null){
             Bundle bundle = new Bundle();
             bundle.putSerializable("seasons", seasons);
+            receiver.send(Constants.Codes.CODE_OK, bundle);
+        } else {
+            receiver.send(Constants.Codes.CODE_FAIL, null);
+        }
+    }
+
+    private void handleGetNextFixtures(ResultReceiver receiver, long id){
+        FixtureList fixtures = processor.getNextTeamFixtures(id);
+        if(fixtures != null){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("fixtures", fixtures);
             receiver.send(Constants.Codes.CODE_OK, bundle);
         } else {
             receiver.send(Constants.Codes.CODE_FAIL, null);

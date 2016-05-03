@@ -1,19 +1,35 @@
 package com.sashqua.wowser.activities;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sashqua.wowser.Constants;
+import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
+import com.sashqua.wowser.models.Fixture;
+import com.sashqua.wowser.models.FixtureList;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends NetBaseActivity {
+
+    private long teamId;
+    private int requestId = -1;
+    private FixtureList fixtures;
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +40,43 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sPref;
         sPref = getSharedPreferences("TEST", MODE_PRIVATE);
-        long teamId = sPref.getLong(Constants.Data.SAVED_TEAM_ID, 0);
+        teamId = sPref.getLong(Constants.Data.SAVED_TEAM_ID, 0);
 
         TextView tv1 = (TextView)findViewById(R.id.textView3);
         tv1.setText("id=" + teamId);
+
+        getFixtures();
+    }
+
+    private void getFixtures(){
+        requestId = getServiceHelper().getTeamNextFixtures(teamId);
+    }
+
+    private void drawFixtures(){
+        lv = (ListView) findViewById(R.id.listView2);
+        if(fixtures != null){
+            List<String> futureMatches = new ArrayList<>();
+            for(Fixture f : fixtures.getFixtures()){
+                Log.d("KEK", f.getHomeTeamName() + " - " + f.getAwayTeamName());
+                futureMatches.add(f.getHomeTeamName() + " - " + f.getAwayTeamName());
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, futureMatches){
+
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = super.getView(position, convertView, parent);
+                    ((TextView) v).setTextColor(Color.WHITE);
+                    ((TextView) v).setGravity(Gravity.CENTER);
+                    ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+                    return v;
+                }
+
+            };
+
+            lv.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -50,5 +99,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onServiceCallback(int requestId, int resultCode, Bundle bundle){
+        if (requestId == this.requestId && resultCode == Constants.Codes.CODE_OK) {
+            fixtures = (FixtureList) bundle.getSerializable("fixtures");
+            drawFixtures();
+        }
+
     }
 }

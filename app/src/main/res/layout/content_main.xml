@@ -12,7 +12,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main"
     tools:context=".activities.MainActivity"
-    android:background="#30323e"
+    android:background="#000000"
     android:clickable="true">
 
     <TextView
@@ -33,7 +33,31 @@
         android:id="@+id/textView3"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="20dp"
         android:textColor="@color/whiteText" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next Games"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/whiteText" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="253dp"
+            android:id="@+id/listView2"
+            android:layout_gravity="center_horizontal"
+            android:background="#30323e" />
+    </LinearLayout>
 
 </RelativeLayout>

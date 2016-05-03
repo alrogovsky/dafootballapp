@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.os.ResultReceiver;
+import android.util.Log;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetService;
@@ -67,6 +68,16 @@ public class ServiceHelper implements ServiceCallbackListener {
         final int requestId = createId();
         Intent intent = createIntent(Constants.Action.GET_SEASONS, requestId);
         intent.putExtra(Constants.Data.EXTRA_SEASON, season);
+
+        application.startService(intent);
+
+        return requestId;
+    }
+
+    public int getTeamNextFixtures(long teamId){
+        final int requestId = createId();
+        Intent intent = createIntent(Constants.Action.GET_NEXT_FIXTURES, requestId);
+        intent.putExtra(Constants.Data.EXTRA_TEAM_ID, teamId);
 
         application.startService(intent);
 
