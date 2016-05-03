@@ -1,9 +1,11 @@
-package com.sashqua.wowser;
+package com.sashqua.wowser.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.sashqua.wowser.R;
 
 public class LoadingActivity extends AppCompatActivity {
 
