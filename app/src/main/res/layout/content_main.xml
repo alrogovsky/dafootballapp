@@ -16,7 +16,7 @@
     android:clickable="true">
 
     <TextView
-        android:text="@string/app_title"
+        android:text="YOUR FAVOURITE TEAM IS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
@@ -26,14 +26,14 @@
         android:layout_marginTop="66dp"
         android:textSize="20dp" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PRESS TO WIN"
-        android:id="@+id/button"
-        android:layout_marginTop="46dp"
-        android:onClick="selectTeam"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView3"
         android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="77dp"
+        android:textColor="@color/whiteText" />
 
 </RelativeLayout>

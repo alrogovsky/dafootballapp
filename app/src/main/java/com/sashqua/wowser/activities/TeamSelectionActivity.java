@@ -1,5 +1,6 @@
 package com.sashqua.wowser.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,8 +25,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class TeamSelectionActivity extends NetBaseActivity {
-
-    final String SAVED_TEAM_ID = "team_id";
 
     private int requestId = -1;
     private TeamList teams;
@@ -62,12 +61,6 @@ public class TeamSelectionActivity extends NetBaseActivity {
                         + chosenTeam.getId());
             }
         });
-
-        sPref = getPreferences(MODE_PRIVATE);
-        String saved_id = sPref.getString(SAVED_TEAM_ID, null);
-        if(saved_id != null){
-            Log.d("KEK", saved_id);
-        }
 
         requestTeams();
     }
@@ -112,6 +105,18 @@ public class TeamSelectionActivity extends NetBaseActivity {
 
             lv.setAdapter(adapter);
         }
+    }
+
+    public void makeChoice(View view){
+        sPref = getSharedPreferences("TEST", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        Log.d("KEK", "PUT ID " + chosenTeam.getId());
+        ed.putLong(Constants.Data.SAVED_TEAM_ID, chosenTeam.getId());
+        ed.commit();
+
+        Intent intent = new Intent(TeamSelectionActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
