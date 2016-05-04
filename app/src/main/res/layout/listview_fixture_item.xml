@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:layout_gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/fixtureTeamHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/fixtures_text"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:textColor="@color/whiteText"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:layout_toLeftOf="@+id/fixtureScore"
+        android:layout_toStartOf="@+id/fixtureScore" />
+
+    <TextView
+        android:id="@+id/fixtureScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/fixtures_text"
+        android:textColor="@color/whiteText"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/fixtureTeamAway"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/whiteText"
+        android:textSize="@dimen/fixtures_text"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@+id/fixtureScore"
+        android:layout_toRightOf="@+id/fixtureScore" />
+
+</RelativeLayout>

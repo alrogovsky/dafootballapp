@@ -20,6 +20,7 @@ import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
 import com.sashqua.wowser.models.Fixture;
 import com.sashqua.wowser.models.FixtureList;
+import com.sashqua.wowser.utils.FixtureAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,53 +60,14 @@ public class MainActivity extends NetBaseActivity {
 
     private void drawFixtures() {
         if (fixtures != null && results != null) {
-            ListView lv = (ListView) findViewById(R.id.listView2);
-            ListView lv2 = (ListView) findViewById(R.id.listView3);
+            ListView lvFixtures = (ListView) findViewById(R.id.listView2);
+            ListView lvResults = (ListView) findViewById(R.id.listView3);
 
-            List<String> futureMatches = new ArrayList<>();
-            for (Fixture f : fixtures.getFixtures()) {
-                Log.d("KEK", f.getHomeTeamName() + " - " + f.getAwayTeamName());
-                futureMatches.add(f.getHomeTeamName() + " - " + f.getAwayTeamName());
-            }
+            FixtureAdapter fixturesAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item, fixtures.getFixtures());
+            FixtureAdapter resultsAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item, results.getFixtures(), true);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, futureMatches) {
-
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    View v = super.getView(position, convertView, parent);
-                    ((TextView) v).setTextColor(Color.WHITE);
-                    ((TextView) v).setGravity(Gravity.CENTER);
-                    ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
-                    return v;
-                }
-
-            };
-
-            List<String> resultMatches = new ArrayList<>();
-            for (Fixture r : results.getFixtures()) {
-                String resultLine = r.getHomeTeamName() + " " + r.getResult().getGoalsHomeTeam() +
-                        "-" + r.getResult().getGoalsAwayTeam() + " " + r.getAwayTeamName();
-                Log.d("KEK", resultLine);
-                resultMatches.add(resultLine);
-            }
-
-            ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, resultMatches) {
-
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    View v = super.getView(position, convertView, parent);
-                    ((TextView) v).setTextColor(Color.WHITE);
-                    ((TextView) v).setGravity(Gravity.CENTER);
-                    ((TextView) v).setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
-                    return v;
-                }
-
-            };
-
-            lv.setAdapter(adapter);
-            lv2.setAdapter(adapter2);
+            lvFixtures.setAdapter(fixturesAdapter);
+            lvResults.setAdapter(resultsAdapter);
         }
     }
 
