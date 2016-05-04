@@ -13,7 +13,7 @@
     tools:showIn="@layout/activity_main"
     tools:context=".activities.MainActivity"
     android:background="#000000"
-    android:clickable="true">
+    android:clickable="false">
 
     <TextView
         android:text="YOUR FAVOURITE TEAM IS"
