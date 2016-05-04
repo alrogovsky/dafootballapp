@@ -36,20 +36,29 @@ public class NetService extends IntentService {
             final ResultReceiver receiver = intent.getParcelableExtra(Constants.RECEIVER);
             final String action = intent.getAction();
 
-            if(Constants.Action.GET_TEAMS.equals(action)){
-                final long id = intent.getLongExtra(Constants.Data.EXTRA_LEAGUE_ID, -1);
-                handleGetTeams(receiver, id);
-            } else if(Constants.Action.GET_SEASONS.equals(action)){
-                final String season = intent.getStringExtra(Constants.Data.EXTRA_SEASON);
-                handleGetSeasons(receiver, season);
-            } else if(Constants.Action.GET_NEXT_FIXTURES.equals(action)){
-                final long id = intent.getLongExtra(Constants.Data.EXTRA_TEAM_ID, -1);
-                handleGetNextFixtures(receiver, id);
-            } else if(Constants.Action.GET_RESULTS.equals(action)){
-                final long id = intent.getLongExtra(Constants.Data.EXTRA_TEAM_ID, -1);
-                handleGetResults(receiver, id);
+            switch (action) {
+                case Constants.Action.GET_TEAMS: {
+                    final long id = intent.getLongExtra(Constants.Data.EXTRA_LEAGUE_ID, -1);
+                    handleGetTeams(receiver, id);
+                    break;
+                }
+                case Constants.Action.GET_SEASONS: {
+                    final String season = intent.getStringExtra(Constants.Data.EXTRA_SEASON);
+                    handleGetSeasons(receiver, season);
+                    break;
+                }
+                case Constants.Action.GET_NEXT_FIXTURES: {
+                    final long id = intent.getLongExtra(Constants.Data.EXTRA_TEAM_ID, -1);
+                    handleGetNextFixtures(receiver, id);
+                    break;
+                }
+                case Constants.Action.GET_RESULTS: {
+                    final long id = intent.getLongExtra(Constants.Data.EXTRA_TEAM_ID, -1);
+                    handleGetResults(receiver, id);
+                }
+                default:
+                    break;
             }
-
         }
     }
 

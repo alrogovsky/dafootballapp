@@ -2,7 +2,6 @@ package com.sashqua.wowser.utils;
 
 import android.content.Context;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +11,24 @@ import android.widget.TextView;
 
 import com.sashqua.wowser.R;
 import com.sashqua.wowser.models.Fixture;
+import com.sashqua.wowser.models.TeamList;
 
 public class FixtureAdapter extends ArrayAdapter<Fixture> {
 
     private boolean isResults = false;
+    private TeamList teamList;
 
-    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items, boolean isResults) {
+    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items,
+                          TeamList teamlist, boolean isResults) {
         super(context, resource, items);
+        teamList = teamlist;
         this.isResults = isResults;
     }
 
-    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items) {
+    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items,
+                          TeamList teamlist) {
         super(context, resource, items);
+        teamList = teamlist;
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
@@ -109,6 +110,12 @@ public class TeamSelectionActivity extends NetBaseActivity {
             Log.d("KEK", "PUT ID " + chosenTeam.getId());
             ed.putLong(Constants.Data.SAVED_TEAM_ID, chosenTeam.getId());
             ed.putString(Constants.Data.SAVED_TEAM_NAME, chosenTeam.getName());
+
+            // Save team info
+            Gson gson = new Gson();
+            String json = gson.toJson(teamlist);
+            ed.putString("teamList", json);
+
             ed.commit();
 
             Intent intent = new Intent(TeamSelectionActivity.this, MainActivity.class);

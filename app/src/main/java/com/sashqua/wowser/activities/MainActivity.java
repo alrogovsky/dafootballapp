@@ -15,11 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
 import com.sashqua.wowser.models.Fixture;
 import com.sashqua.wowser.models.FixtureList;
+import com.sashqua.wowser.models.Team;
+import com.sashqua.wowser.models.TeamList;
 import com.sashqua.wowser.utils.FixtureAdapter;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class MainActivity extends NetBaseActivity {
 
     private long teamId;
     private String teamName;
+    private TeamList teamList;
     private int fixturesRequestId = -1;
     private int resultsRequestId = -1;
     private FixtureList fixtures;
@@ -47,6 +51,10 @@ public class MainActivity extends NetBaseActivity {
         teamId = sPref.getLong(Constants.Data.SAVED_TEAM_ID, 0);
         teamName = sPref.getString(Constants.Data.SAVED_TEAM_NAME, "ERROR");
 
+        Gson gson = new Gson();
+        String teamListJson = sPref.getString("teamList", "{}");
+        teamList = gson.fromJson(teamListJson, TeamList.class);
+
         TextView tv1 = (TextView) findViewById(R.id.textView3);
         tv1.setText(teamName);
 
@@ -63,8 +71,10 @@ public class MainActivity extends NetBaseActivity {
             ListView lvFixtures = (ListView) findViewById(R.id.listView2);
             ListView lvResults = (ListView) findViewById(R.id.listView3);
 
-            FixtureAdapter fixturesAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item, fixtures.getFixtures());
-            FixtureAdapter resultsAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item, results.getFixtures(), true);
+            FixtureAdapter fixturesAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item,
+                    fixtures.getFixtures(), teamList);
+            FixtureAdapter resultsAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item,
+                    results.getFixtures(), teamList, true);
 
             lvFixtures.setAdapter(fixturesAdapter);
             lvResults.setAdapter(resultsAdapter);

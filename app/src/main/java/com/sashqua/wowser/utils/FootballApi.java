@@ -1,6 +1,7 @@
 package com.sashqua.wowser.utils;
 
 import com.sashqua.wowser.Constants;
+import com.sashqua.wowser.models.Fixture;
 import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.Season;
 import com.sashqua.wowser.models.TeamList;
