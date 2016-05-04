@@ -27,7 +27,7 @@ import java.util.List;
 public class TeamSelectionActivity extends NetBaseActivity {
 
     private int requestId = -1;
-    private TeamList teams;
+    private TeamList teamlist;
     private ListView lv;
     private Team chosenTeam;
 
@@ -56,7 +56,7 @@ public class TeamSelectionActivity extends NetBaseActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Log.d("KEK", "itemClick: position = " + position + ", id = " + id);
-                chosenTeam = teams.getTeams().get(position);
+                chosenTeam = teamlist.getSortedTeams().get(position);
                 Log.d("KEK", "chosen: " + chosenTeam.getShortName() + " "
                         + chosenTeam.getId());
             }
@@ -68,28 +68,23 @@ public class TeamSelectionActivity extends NetBaseActivity {
     @Override
     public void onServiceCallback(int requestId, int resultCode, Bundle bundle){
         if (requestId == this.requestId && resultCode == Constants.Codes.CODE_OK) {
-            teams = (TeamList) bundle.getSerializable("teams");
+            teamlist = (TeamList) bundle.getSerializable("teams");
             updateTeams();
-//            ArrayList<Season> seasons = (ArrayList<Season>) bundle.getSerializable("seasons");
-//            Log.d("KEK", "id: " + seasons.get(0).id);
         }
 
     }
 
     public void requestTeams(){
         requestId = getServiceHelper().getTeams(398);
-//        requestId = getServiceHelper().getSeasons("2015");
     }
 
     private void updateTeams(){
-        if(teams != null){
+        if(teamlist != null){
             List<String> clubNames = new ArrayList<String>();
-            for(Team t : teams.getTeams()){
+            for(Team t : teamlist.getSortedTeams()){
                 clubNames.add(t.getName());
-                Log.d("KEK", "id="+t.id);
+                Log.d("KEK", "name="+t.getName());
             }
-
-//            Collections.sort(clubNames);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_single_choice, clubNames){
@@ -108,16 +103,18 @@ public class TeamSelectionActivity extends NetBaseActivity {
     }
 
     public void makeChoice(View view){
-        sPref = getSharedPreferences("TEST", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        Log.d("KEK", "PUT ID " + chosenTeam.getId());
-        ed.putLong(Constants.Data.SAVED_TEAM_ID, chosenTeam.getId());
-        ed.putString(Constants.Data.SAVED_TEAM_NAME, chosenTeam.getName());
-        ed.commit();
+        if(chosenTeam != null) {
+            sPref = getSharedPreferences("TEST", MODE_PRIVATE);
+            SharedPreferences.Editor ed = sPref.edit();
+            Log.d("KEK", "PUT ID " + chosenTeam.getId());
+            ed.putLong(Constants.Data.SAVED_TEAM_ID, chosenTeam.getId());
+            ed.putString(Constants.Data.SAVED_TEAM_NAME, chosenTeam.getName());
+            ed.commit();
 
-        Intent intent = new Intent(TeamSelectionActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+            Intent intent = new Intent(TeamSelectionActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }

@@ -19,6 +19,7 @@ public final class Constants {
         public static final String GET_TEAMS = "com.sashqua.wowser.actions.GET_TEAMS";
         public static final String GET_SEASONS = "com.sashqua.wowser.actions.GET_SEASONS";
         public static final String GET_NEXT_FIXTURES = "com.sashqua.wowser.actions.GET_NEXT_FIXTURES";
+        public static final String GET_RESULTS = "com.sashqua.wowser.actions.GET_RESULTS";
     }
 
     public static final class Codes {

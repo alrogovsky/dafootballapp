@@ -27,4 +27,8 @@ public interface FootballApi {
     @GET("v1/teams/{team_id}/fixtures?timeFrame=n14")
     Call<FixtureList> getTeamNextFixtures(@Path("team_id") long id);
 
+    @Headers({"X-Auth-Token: " + Constants.API_KEY, "X-Response-Control: minified"})
+    @GET("v1/teams/{team_id}/fixtures?timeFrame=p14")
+    Call<FixtureList> getTeamResults(@Path("team_id") long id);
+
 }

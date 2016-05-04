@@ -1,12 +1,9 @@
 package com.sashqua.wowser.utils;
 
-import android.util.Log;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.sashqua.wowser.Constants;
-import com.sashqua.wowser.models.Fixture;
 import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.Season;
 import com.sashqua.wowser.models.TeamList;
@@ -60,6 +57,20 @@ public class Processor {
         Response<FixtureList> response;
         try{
             response = footballApi.getTeamNextFixtures(id).execute();
+        } catch (IOException e) {
+            return null;
+        }
+        if(response.isSuccessful()){
+            return response.body();
+        }
+
+        return null;
+    }
+
+    public FixtureList getTeamResults(long id){
+        Response<FixtureList> response;
+        try{
+            response = footballApi.getTeamResults(id).execute();
         } catch (IOException e) {
             return null;
         }

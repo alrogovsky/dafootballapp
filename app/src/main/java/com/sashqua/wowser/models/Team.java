@@ -3,7 +3,7 @@ package com.sashqua.wowser.models;
 import java.io.Serializable;
 
 public class Team implements Serializable {
-    public long id;
+    private long id;
     private String name;
     private String shortName;
     private String squadMarketValue;

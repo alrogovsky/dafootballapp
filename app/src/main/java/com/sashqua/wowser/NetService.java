@@ -45,7 +45,9 @@ public class NetService extends IntentService {
             } else if(Constants.Action.GET_NEXT_FIXTURES.equals(action)){
                 final long id = intent.getLongExtra(Constants.Data.EXTRA_TEAM_ID, -1);
                 handleGetNextFixtures(receiver, id);
-                Log.d("KEK", "HANDLING");
+            } else if(Constants.Action.GET_RESULTS.equals(action)){
+                final long id = intent.getLongExtra(Constants.Data.EXTRA_TEAM_ID, -1);
+                handleGetResults(receiver, id);
             }
 
         }
@@ -78,6 +80,17 @@ public class NetService extends IntentService {
         if(fixtures != null){
             Bundle bundle = new Bundle();
             bundle.putSerializable("fixtures", fixtures);
+            receiver.send(Constants.Codes.CODE_OK, bundle);
+        } else {
+            receiver.send(Constants.Codes.CODE_FAIL, null);
+        }
+    }
+
+    private void handleGetResults(ResultReceiver receiver, long id){
+        FixtureList fixtures = processor.getTeamResults(id);
+        if(fixtures != null){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("results", fixtures);
             receiver.send(Constants.Codes.CODE_OK, bundle);
         } else {
             receiver.send(Constants.Codes.CODE_FAIL, null);
