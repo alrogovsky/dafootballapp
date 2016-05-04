@@ -31,18 +31,21 @@
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="10dp"
-        android:textSize="20dp"
+        android:paddingBottom="5sp"
+        android:textSize="20sp"
         android:textColor="#ffffff" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Done"
         android:id="@+id/buttonSelectTeam"
-        android:layout_marginBottom="53dp"
+        android:layout_marginBottom="5sp"
+        android:layout_marginLeft="35sp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/button_boarder"
+        android:textColor="@color/whiteText"
         android:onClick="makeChoice" />
 
 </RelativeLayout>
