@@ -12,7 +12,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_future_main"
     tools:context=".activities.FutureMainActivity"
-    android:background="#0000FF"
+    android:background="#AAAAAA"
     android:clickable="false">
 
     <TextView

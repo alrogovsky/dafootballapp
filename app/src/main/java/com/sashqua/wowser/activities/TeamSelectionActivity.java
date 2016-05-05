@@ -118,7 +118,7 @@ public class TeamSelectionActivity extends NetBaseActivity {
 
             ed.commit();
 
-            Intent intent = new Intent(TeamSelectionActivity.this, MainActivity.class);
+            Intent intent = new Intent(TeamSelectionActivity.this, FutureMainActivity.class);
             startActivity(intent);
             finish();
         }

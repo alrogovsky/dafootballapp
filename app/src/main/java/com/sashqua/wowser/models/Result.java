@@ -1,7 +1,9 @@
 package com.sashqua.wowser.models;
 
 
-public class Result {
+import java.io.Serializable;
+
+public class Result implements Serializable{
 
     private int goalsHomeTeam;
     private int goalsAwayTeam;

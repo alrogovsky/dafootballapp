@@ -1,6 +1,8 @@
 package com.sashqua.wowser.models;
 
-public class Season {
+import java.io.Serializable;
+
+public class Season implements Serializable{
     public long id;
     public String caption;
     public String league;
