@@ -16,19 +16,14 @@ import com.sashqua.wowser.models.TeamList;
 public class FixtureAdapter extends ArrayAdapter<Fixture> {
 
     private boolean isResults = false;
-    private TeamList teamList;
 
-    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items,
-                          TeamList teamlist, boolean isResults) {
+    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items, boolean isResults) {
         super(context, resource, items);
-        teamList = teamlist;
         this.isResults = isResults;
     }
 
-    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items,
-                          TeamList teamlist) {
+    public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items) {
         super(context, resource, items);
-        teamList = teamlist;
     }
 
     @Override

@@ -1,17 +1,10 @@
 package com.sashqua.wowser.activities;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -72,9 +65,9 @@ public class MainActivity extends NetBaseActivity {
             ListView lvResults = (ListView) findViewById(R.id.listView3);
 
             FixtureAdapter fixturesAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item,
-                    fixtures.getFixtures(), teamList);
+                    fixtures.getFixtures());
             FixtureAdapter resultsAdapter = new FixtureAdapter(this, R.layout.listview_fixture_item,
-                    results.getFixtures(), teamList, true);
+                    results.getFixtures(), true);
 
             lvFixtures.setAdapter(fixturesAdapter);
             lvResults.setAdapter(resultsAdapter);

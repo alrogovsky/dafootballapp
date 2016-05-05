@@ -29,7 +29,7 @@ public class LoadingActivity extends AppCompatActivity {
 
                 if(saved_id != 0){
                     Log.d("KEK", "SAVED_ID= " + saved_id);
-                    Intent intent = new Intent(LoadingActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoadingActivity.this, FutureMainActivity.class);
                     LoadingActivity.this.startActivity(intent);
                     LoadingActivity.this.finish();
                 } else {

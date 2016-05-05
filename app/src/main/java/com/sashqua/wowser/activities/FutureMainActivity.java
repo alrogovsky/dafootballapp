@@ -1,5 +1,8 @@
 package com.sashqua.wowser.activities;
 
+import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -8,17 +11,38 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.sashqua.wowser.Constants;
+import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
+import com.sashqua.wowser.models.Fixture;
+import com.sashqua.wowser.models.FixtureList;
+import com.sashqua.wowser.models.TeamList;
+import com.sashqua.wowser.utils.FixtureAdapter;
 
-public class FutureMainActivity extends AppCompatActivity {
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+
+public class FutureMainActivity extends NetBaseActivity {
+
+    private long teamId;
+    private String teamName;
+    private int fixturesRequestId = -1;
+    private int resultsRequestId = -1;
+    private FixtureList fixtures;
+    private FixtureList results;
+
+    private Drawer mDrawer;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,11 +68,25 @@ public class FutureMainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        new DrawerBuilder().withActivity(this).build();
+
+        SharedPreferences sPref;
+
+        sPref = getSharedPreferences("TEST", MODE_PRIVATE);
+        teamId = sPref.getLong(Constants.Data.SAVED_TEAM_ID, 0);
+        teamName = sPref.getString(Constants.Data.SAVED_TEAM_NAME, "ERROR");
+
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
+
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        mDrawer = new DrawerBuilder().withActivity(this).build();
+        mDrawer.setSelection(1);
+
+        getFixtures();
 
     }
 
@@ -75,27 +113,100 @@ public class FutureMainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void getFixtures() {
+        fixturesRequestId = getServiceHelper().getTeamNextFixtures(teamId);
+        resultsRequestId = getServiceHelper().getTeamResults(teamId);
+    }
+
+    @Override
+    public void onServiceCallback(int requestId, int resultCode, Bundle bundle) {
+        if (requestId == this.fixturesRequestId && resultCode == Constants.Codes.CODE_OK) {
+            fixtures = (FixtureList) bundle.getSerializable("fixtures");
+        } else if (requestId == this.resultsRequestId && resultCode == Constants.Codes.CODE_OK) {
+            results = (FixtureList) bundle.getSerializable("results");
+        }
+
+        Log.d("KEK", "DATA GOT?");
+
+        mSectionsPagerAdapter.notifyDataSetChanged();
+    }
+
+    /*********************** FRAGMENTS LOGIC ***********************/
+
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class ResultsFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
+        public ResultsFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static ResultsFragment newInstance(String teamName, FixtureList f, FixtureList r) {
+            ResultsFragment fragment = new ResultsFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putString("team_name", teamName);
+            args.putSerializable("fixtures", f);
+            args.putSerializable("results", r);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_future_main, container, false);
+            TextView textView = (TextView) rootView.findViewById(R.id.teamName);
+            textView.setText(getArguments().getString("team_name"));
+
+            ListView lvFixtures = (ListView) rootView.findViewById(R.id.listView2);
+            ListView lvResults = (ListView) rootView.findViewById(R.id.listView3);
+
+            FixtureList fixtures = (FixtureList) getArguments().getSerializable("fixtures");
+            FixtureList results = (FixtureList) getArguments().getSerializable("results");
+
+            if(fixtures != null && results != null) {
+                FixtureAdapter fixturesAdapter = new FixtureAdapter(getContext(), R.layout.listview_fixture_item,
+                fixtures.getFixtures());
+                FixtureAdapter resultsAdapter = new FixtureAdapter(getContext(), R.layout.listview_fixture_item,
+                        results.getFixtures(), true);
+
+                lvFixtures.setAdapter(fixturesAdapter);
+                lvResults.setAdapter(resultsAdapter);
+            }
+
+
+            return rootView;
+        }
+    }
+
+    public static class StandingsFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public StandingsFragment() {
+        }
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static ResultsFragment newInstance(String teamName) {
+            ResultsFragment fragment = new ResultsFragment();
+            Bundle args = new Bundle();
+            args.putString("team_name", teamName);
             fragment.setArguments(args);
             return fragment;
         }
@@ -104,8 +215,8 @@ public class FutureMainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_future_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            TextView textView = (TextView) rootView.findViewById(R.id.teamName);
+            textView.setText(getArguments().getString("team_name"));
             return rootView;
         }
     }
@@ -114,22 +225,29 @@ public class FutureMainActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        public int getItemPosition(Object object){
+            return POSITION_NONE;
+        }
+
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            Log.d("adapter", "redraw");
+            if(position == 0){
+                return ResultsFragment.newInstance(teamName, fixtures, results);
+            } else {
+                return ResultsFragment.newInstance("KEK", fixtures, results);
+            }
+
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
@@ -137,9 +255,9 @@ public class FutureMainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Results";
                 case 1:
-                    return "SECTION 2";
+                    return "Standings";
             }
             return null;
         }
