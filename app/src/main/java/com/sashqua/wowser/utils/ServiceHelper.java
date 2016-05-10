@@ -56,7 +56,7 @@ public class ServiceHelper implements ServiceCallbackListener {
     public int getTeams(long leagueId){
         final int requestId = createId();
         Intent intent = createIntent(Constants.Action.GET_TEAMS, requestId);
-        intent.putExtra(Constants.Data.EXTRA_LEAGUE_ID, leagueId);
+        intent.putExtra(Constants.Data.EXTRA_SEASON_ID, leagueId);
 
         application.startService(intent);
 
@@ -87,6 +87,16 @@ public class ServiceHelper implements ServiceCallbackListener {
         final int requestId = createId();
         Intent intent = createIntent(Constants.Action.GET_RESULTS, requestId);
         intent.putExtra(Constants.Data.EXTRA_TEAM_ID, teamId);
+
+        application.startService(intent);
+
+        return requestId;
+    }
+
+    public int getLeagueTable(long seasonId){
+        final int requestId = createId();
+        Intent intent = createIntent(Constants.Action.GET_LEAGUE_TABLE, requestId);
+        intent.putExtra(Constants.Data.EXTRA_SEASON_ID, seasonId);
 
         application.startService(intent);
 

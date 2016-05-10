@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.models.FixtureList;
+import com.sashqua.wowser.models.LeagueTable;
 import com.sashqua.wowser.models.Season;
 import com.sashqua.wowser.models.TeamList;
 
@@ -71,6 +72,20 @@ public class Processor {
         Response<FixtureList> response;
         try{
             response = footballApi.getTeamResults(id).execute();
+        } catch (IOException e) {
+            return null;
+        }
+        if(response.isSuccessful()){
+            return response.body();
+        }
+
+        return null;
+    }
+
+    public LeagueTable getLeagueTable(long seasonId){
+        Response<LeagueTable> response;
+        try{
+            response = footballApi.getLeagueTable(seasonId).execute();
         } catch (IOException e) {
             return null;
         }

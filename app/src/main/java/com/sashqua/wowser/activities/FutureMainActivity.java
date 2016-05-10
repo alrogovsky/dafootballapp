@@ -27,6 +27,7 @@ import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
 import com.sashqua.wowser.models.Fixture;
 import com.sashqua.wowser.models.FixtureList;
+import com.sashqua.wowser.models.LeagueTable;
 import com.sashqua.wowser.models.TeamList;
 import com.sashqua.wowser.utils.FixtureAdapter;
 
@@ -39,8 +40,10 @@ public class FutureMainActivity extends NetBaseActivity {
     private String teamName;
     private int fixturesRequestId = -1;
     private int resultsRequestId = -1;
+    private int leagueTableRequestId = -1;
     private FixtureList fixtures;
     private FixtureList results;
+    private LeagueTable leagueTable;
 
     private Drawer mDrawer;
 
@@ -116,6 +119,7 @@ public class FutureMainActivity extends NetBaseActivity {
     private void getFixtures() {
         fixturesRequestId = getServiceHelper().getTeamNextFixtures(teamId);
         resultsRequestId = getServiceHelper().getTeamResults(teamId);
+        leagueTableRequestId = getServiceHelper().getLeagueTable(398);
     }
 
     @Override
@@ -124,9 +128,9 @@ public class FutureMainActivity extends NetBaseActivity {
             fixtures = (FixtureList) bundle.getSerializable("fixtures");
         } else if (requestId == this.resultsRequestId && resultCode == Constants.Codes.CODE_OK) {
             results = (FixtureList) bundle.getSerializable("results");
+        } else if (requestId == this.leagueTableRequestId && resultCode == Constants.Codes.CODE_OK){
+            leagueTable = (LeagueTable) bundle.getSerializable("league_table");
         }
-
-        Log.d("KEK", "DATA GOT?");
 
         mSectionsPagerAdapter.notifyDataSetChanged();
     }
@@ -237,7 +241,6 @@ public class FutureMainActivity extends NetBaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.d("adapter", "redraw");
             if(position == 0){
                 return ResultsFragment.newInstance(teamName, fixtures, results);
             } else {
