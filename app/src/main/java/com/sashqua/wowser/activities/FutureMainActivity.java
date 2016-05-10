@@ -1,9 +1,8 @@
 package com.sashqua.wowser.activities;
 
-import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,18 +19,19 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
-import com.sashqua.wowser.models.Fixture;
 import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.LeagueTable;
-import com.sashqua.wowser.models.TeamList;
+import com.sashqua.wowser.models.Standing;
 import com.sashqua.wowser.utils.FixtureAdapter;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.sashqua.wowser.utils.StandingsAdapter;
+
+import java.util.ArrayList;
 
 public class FutureMainActivity extends NetBaseActivity {
 
@@ -89,7 +88,7 @@ public class FutureMainActivity extends NetBaseActivity {
         mDrawer = new DrawerBuilder().withActivity(this).build();
         mDrawer.setSelection(1);
 
-        getFixtures();
+        getData();
 
     }
 
@@ -116,7 +115,7 @@ public class FutureMainActivity extends NetBaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getFixtures() {
+    private void getData() {
         fixturesRequestId = getServiceHelper().getTeamNextFixtures(teamId);
         resultsRequestId = getServiceHelper().getTeamResults(teamId);
         leagueTableRequestId = getServiceHelper().getLeagueTable(398);
@@ -141,11 +140,6 @@ public class FutureMainActivity extends NetBaseActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class ResultsFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
         public ResultsFragment() {
         }
@@ -168,7 +162,7 @@ public class FutureMainActivity extends NetBaseActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.fragment_future_main, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_fixtures_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.teamName);
             textView.setText(getArguments().getString("team_name"));
 
@@ -194,23 +188,14 @@ public class FutureMainActivity extends NetBaseActivity {
     }
 
     public static class StandingsFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
         public StandingsFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ResultsFragment newInstance(String teamName) {
-            ResultsFragment fragment = new ResultsFragment();
+        public static StandingsFragment newInstance(LeagueTable lt) {
+            StandingsFragment fragment = new StandingsFragment();
             Bundle args = new Bundle();
-            args.putString("team_name", teamName);
+            args.putSerializable("league_table", lt);
             fragment.setArguments(args);
             return fragment;
         }
@@ -218,9 +203,17 @@ public class FutureMainActivity extends NetBaseActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_future_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.teamName);
-            textView.setText(getArguments().getString("team_name"));
+            View rootView = inflater.inflate(R.layout.fragment_table_main, container, false);
+            LeagueTable table = (LeagueTable) getArguments().getSerializable("league_table");
+
+            ListView lvTable = (ListView) rootView.findViewById(R.id.listView4);
+            if(table != null){
+                StandingsAdapter adapter = new StandingsAdapter(getContext(), R.layout.listview_table_item,
+                        table.getStandings());
+
+                lvTable.setAdapter(adapter);
+            }
+
             return rootView;
         }
     }
@@ -244,7 +237,7 @@ public class FutureMainActivity extends NetBaseActivity {
             if(position == 0){
                 return ResultsFragment.newInstance(teamName, fixtures, results);
             } else {
-                return ResultsFragment.newInstance("KEK", fixtures, results);
+                return StandingsFragment.newInstance(leagueTable);
             }
 
         }

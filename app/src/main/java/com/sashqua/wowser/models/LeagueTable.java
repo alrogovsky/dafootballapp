@@ -8,7 +8,7 @@ public class LeagueTable implements Serializable{
     private String leagueCaption;
     private ArrayList<Standing> standing;
 
-    public ArrayList<Standing> getStanding() {
+    public ArrayList<Standing> getStandings() {
         return standing;
     }
 
