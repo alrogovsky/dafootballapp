@@ -18,13 +18,12 @@ public class FootballContentProvider extends ContentProvider{
 
     private static final String AUTHORITY = "com.sashqua.wowser.dafootball.provider";
 
-    private static final String FAVOURITE_TEAMS_PATH = "favourite_teams";
-    private static final int GET_TEAM_CODE = 1;
+    private static final String FAVOURITE_TEAMS_PATH = "teams";
+    private static final int GET_TEAMS_CODE = 1;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-
-        uriMatcher.addURI(AUTHORITY, FAVOURITE_TEAMS_PATH, GET_TEAM_CODE);
+        uriMatcher.addURI(AUTHORITY, FAVOURITE_TEAMS_PATH, GET_TEAMS_CODE);
     }
 
     @Override
@@ -39,8 +38,7 @@ public class FootballContentProvider extends ContentProvider{
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         switch (uriMatcher.match(uri)) {
-
-            case GET_TEAM_CODE:
+            case GET_TEAMS_CODE:
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 Cursor cursor = db.query(
                         FAVOURITE_TEAMS_PATH,
@@ -63,8 +61,7 @@ public class FootballContentProvider extends ContentProvider{
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         switch (uriMatcher.match(uri)) {
-
-            case GET_TEAM_CODE:
+            case GET_TEAMS_CODE:
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 db.insert(
                         FAVOURITE_TEAMS_PATH,
@@ -73,7 +70,6 @@ public class FootballContentProvider extends ContentProvider{
                 );
                 getContext().getContentResolver().notifyChange(uri, null);
                 break;
-
         }
         return null;
     }
@@ -81,8 +77,7 @@ public class FootballContentProvider extends ContentProvider{
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         switch (uriMatcher.match(uri)) {
-
-            case GET_TEAM_CODE:
+            case GET_TEAMS_CODE:
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 int deleted = db.delete(
                         FAVOURITE_TEAMS_PATH,
@@ -91,7 +86,6 @@ public class FootballContentProvider extends ContentProvider{
                 );
                 getContext().getContentResolver().notifyChange(uri, null);
                 return deleted;
-
         }
         return 0;
     }

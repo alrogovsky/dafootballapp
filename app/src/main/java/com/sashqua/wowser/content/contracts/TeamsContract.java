@@ -9,7 +9,7 @@ public final class TeamsContract {
 
     public static abstract class Teams implements BaseColumns{
         public static final String TABLE_NAME = "teams";
-        public static final String COLUMN_NAME_TEAM_ID = "team_id";
+        public static final String COLUMN_NAME_TEAM_ID = "api_id";
         public static final String COLUMN_NAME_TEAM_NAME= "team_name";
         public static final String COLUMN_NAME_SHORT_NAME = "short_name";
     }

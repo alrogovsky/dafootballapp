@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sashqua.wowser.content.contracts.FavouriteTeamContract;
+import com.sashqua.wowser.content.contracts.TeamsContract;
 
 public class DBHelper extends SQLiteOpenHelper{
 
@@ -17,12 +17,12 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(FavouriteTeamContract.SQL_CREATE);
+        db.execSQL(TeamsContract.SQL_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-        db.execSQL(FavouriteTeamContract.SQL_DELETE);
+        db.execSQL(TeamsContract.SQL_DELETE);
         onCreate(db);
     }
 }

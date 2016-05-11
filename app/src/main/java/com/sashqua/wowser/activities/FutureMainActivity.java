@@ -2,7 +2,6 @@ package com.sashqua.wowser.activities;
 
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -10,28 +9,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
 import com.sashqua.wowser.R;
+import com.sashqua.wowser.fragments.StandingsFragment;
+import com.sashqua.wowser.fragments.ResultsFragment;
 import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.LeagueTable;
-import com.sashqua.wowser.models.Standing;
-import com.sashqua.wowser.utils.FixtureAdapter;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.sashqua.wowser.utils.StandingsAdapter;
-
-import java.util.ArrayList;
 
 public class FutureMainActivity extends NetBaseActivity {
 
@@ -92,7 +82,6 @@ public class FutureMainActivity extends NetBaseActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -136,92 +125,6 @@ public class FutureMainActivity extends NetBaseActivity {
 
     /*********************** FRAGMENTS LOGIC ***********************/
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class ResultsFragment extends Fragment {
-
-        public ResultsFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static ResultsFragment newInstance(String teamName, FixtureList f, FixtureList r) {
-            ResultsFragment fragment = new ResultsFragment();
-            Bundle args = new Bundle();
-            args.putString("team_name", teamName);
-            args.putSerializable("fixtures", f);
-            args.putSerializable("results", r);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_fixtures_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.teamName);
-            textView.setText(getArguments().getString("team_name"));
-
-            ListView lvFixtures = (ListView) rootView.findViewById(R.id.listView2);
-            ListView lvResults = (ListView) rootView.findViewById(R.id.listView3);
-
-            FixtureList fixtures = (FixtureList) getArguments().getSerializable("fixtures");
-            FixtureList results = (FixtureList) getArguments().getSerializable("results");
-
-            if(fixtures != null && results != null) {
-                FixtureAdapter fixturesAdapter = new FixtureAdapter(getContext(), R.layout.listview_fixture_item,
-                fixtures.getFixtures());
-                FixtureAdapter resultsAdapter = new FixtureAdapter(getContext(), R.layout.listview_fixture_item,
-                        results.getFixtures(), true);
-
-                lvFixtures.setAdapter(fixturesAdapter);
-                lvResults.setAdapter(resultsAdapter);
-            }
-
-
-            return rootView;
-        }
-    }
-
-    public static class StandingsFragment extends Fragment {
-
-        public StandingsFragment() {
-        }
-
-        public static StandingsFragment newInstance(LeagueTable lt) {
-            StandingsFragment fragment = new StandingsFragment();
-            Bundle args = new Bundle();
-            args.putSerializable("league_table", lt);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_table_main, container, false);
-            LeagueTable table = (LeagueTable) getArguments().getSerializable("league_table");
-
-            ListView lvTable = (ListView) rootView.findViewById(R.id.listView4);
-            if(table != null){
-                StandingsAdapter adapter = new StandingsAdapter(getContext(), R.layout.listview_table_item,
-                        table.getStandings());
-
-                lvTable.setAdapter(adapter);
-            }
-
-            return rootView;
-        }
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
