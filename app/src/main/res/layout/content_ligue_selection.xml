@@ -21,8 +21,7 @@
         android:layout_below="@+id/textView"
         android:textFilterEnabled="false"
         android:touchscreenBlocksFocus="false"
-        android:choiceMode="singleChoice"
-        android:layout_above="@+id/buttonSelectTeam" />
+        android:choiceMode="singleChoice" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,21 +30,8 @@
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="5sp"
-        android:textSize="20sp"
+        android:paddingBottom="10dp"
+        android:textSize="20dp"
         android:textColor="#ffffff" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Done"
-        android:id="@+id/buttonSelectTeam"
-        android:layout_marginBottom="5sp"
-        android:layout_marginLeft="35sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button_boarder"
-        android:textColor="@color/whiteText"
-        android:onClick="makeChoice" />
 
 </RelativeLayout>

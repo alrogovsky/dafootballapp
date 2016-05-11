@@ -56,7 +56,47 @@ public class ServiceHelper implements ServiceCallbackListener {
     public int getTeams(long leagueId){
         final int requestId = createId();
         Intent intent = createIntent(Constants.Action.GET_TEAMS, requestId);
-        intent.putExtra(Constants.Data.EXTRA_LEAGUE_ID, leagueId);
+        intent.putExtra(Constants.Data.EXTRA_SEASON_ID, leagueId);
+
+        application.startService(intent);
+
+        return requestId;
+    }
+
+    public int getSeasons(String season){
+        final int requestId = createId();
+        Intent intent = createIntent(Constants.Action.GET_SEASONS, requestId);
+        intent.putExtra(Constants.Data.EXTRA_SEASON, season);
+
+        application.startService(intent);
+
+        return requestId;
+    }
+
+    public int getTeamNextFixtures(long teamId){
+        final int requestId = createId();
+        Intent intent = createIntent(Constants.Action.GET_NEXT_FIXTURES, requestId);
+        intent.putExtra(Constants.Data.EXTRA_TEAM_ID, teamId);
+
+        application.startService(intent);
+
+        return requestId;
+    }
+
+    public int getTeamResults(long teamId){
+        final int requestId = createId();
+        Intent intent = createIntent(Constants.Action.GET_RESULTS, requestId);
+        intent.putExtra(Constants.Data.EXTRA_TEAM_ID, teamId);
+
+        application.startService(intent);
+
+        return requestId;
+    }
+
+    public int getLeagueTable(long seasonId){
+        final int requestId = createId();
+        Intent intent = createIntent(Constants.Action.GET_LEAGUE_TABLE, requestId);
+        intent.putExtra(Constants.Data.EXTRA_SEASON_ID, seasonId);
 
         application.startService(intent);
 

@@ -3,7 +3,7 @@ package com.sashqua.wowser.models;
 import java.io.Serializable;
 
 public class Season implements Serializable{
-    public int id;
+    public long id;
     public String caption;
     public String league;
     public String year;

@@ -23,14 +23,14 @@ public abstract class NetBaseActivity extends AppCompatActivity implements Servi
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         serviceHelper.removeListener(this);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         serviceHelper.addListener(this);
     }
 

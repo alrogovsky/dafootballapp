@@ -1,9 +1,11 @@
 package com.sashqua.wowser.utils;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import com.sashqua.wowser.Constants;
+import com.sashqua.wowser.models.FixtureList;
+import com.sashqua.wowser.models.LeagueTable;
 import com.sashqua.wowser.models.Season;
 import com.sashqua.wowser.models.TeamList;
 
@@ -24,8 +26,8 @@ public class Processor {
         footballApi = retrofit.create(FootballApi.class);
     }
 
-    public List<Season> getSeason(String s){
-        Response<List<Season>> response;
+    public ArrayList<Season> getSeason(String s){
+        Response<ArrayList<Season>> response;
         try{
             response = footballApi.getSeasons(s).execute();
         } catch (IOException e) {
@@ -51,4 +53,48 @@ public class Processor {
 
         return null;
     }
+
+    public FixtureList getNextTeamFixtures(long id){
+        Response<FixtureList> response;
+        try{
+            response = footballApi.getTeamNextFixtures(id).execute();
+        } catch (IOException e) {
+            return null;
+        }
+        if(response.isSuccessful()){
+            return response.body();
+        }
+
+        return null;
+    }
+
+    public FixtureList getTeamResults(long id){
+        Response<FixtureList> response;
+        try{
+            response = footballApi.getTeamResults(id).execute();
+        } catch (IOException e) {
+            return null;
+        }
+        if(response.isSuccessful()){
+            return response.body();
+        }
+
+        return null;
+    }
+
+    public LeagueTable getLeagueTable(long seasonId){
+        Response<LeagueTable> response;
+        try{
+            response = footballApi.getLeagueTable(seasonId).execute();
+        } catch (IOException e) {
+            return null;
+        }
+        if(response.isSuccessful()){
+            return response.body();
+        }
+
+        return null;
+    }
+
+
 }

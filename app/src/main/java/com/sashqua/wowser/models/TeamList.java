@@ -1,44 +1,30 @@
 package com.sashqua.wowser.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TeamList implements Serializable {
 
-    public class Team {
-        private int id;
-        private String name;
-        private String shortName;
-        private String squadMarketValue;
-        private String crestUrl;
+    private int count;
+    private ArrayList<Team> teams;
 
-        public int getId() {
-            return id;
-        }
-
-        public String getShortName() {
-            return shortName;
-        }
-
-        public String getSquadMarketValue() {
-            return squadMarketValue;
-        }
-
-        public String getCrestUrl() {
-            return crestUrl;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-
+    public ArrayList<Team> getTeams() {
+        return teams;
     }
 
-    private int count;
-    private List<Team> teams;
+    public ArrayList<Team> getSortedTeams() {
+        if(teams != null){
+            Collections.sort(teams, new Comparator<Team>() {
+                @Override
+                public int compare(final Team object1, final Team object2) {
+                    return object1.getName().compareTo(object2.getName());
+                }
+            });
+        }
 
-    public List<Team> getTeams() {
         return teams;
     }
 

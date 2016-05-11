@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tableTeamName"
+        android:layout_width="0dip"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/standings_text"
+        android:gravity="left"
+        android:textColor="#000000"
+        android:paddingStart="5dp" />
+
+    <TextView
+        android:id="@+id/tableTeamPlayed"
+        android:layout_width="0dip"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/standings_text"
+        android:textColor="#000000"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tableTeamWins"
+        android:layout_width="0dip"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/standings_text"
+        android:textColor="#000000"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tableTeamDraws"
+        android:layout_width="0dip"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/standings_text"
+        android:textColor="#000000"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tableTeamLosses"
+        android:layout_width="0dip"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/standings_text"
+        android:textColor="#000000"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tableTeamPoints"
+        android:layout_width="0dip"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/standings_text"
+        android:textColor="#000000"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:gravity="center" />
+
+</LinearLayout>
