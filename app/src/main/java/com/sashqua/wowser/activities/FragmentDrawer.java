@@ -30,7 +30,7 @@ public class FragmentDrawer extends Fragment {
     private DrawerLayout mDrawerLayout;
     private NavigationDrawerAdapter adapter;
     private View containerView;
-    private static String[] titles = {"change command", "test"};
+    private static String[] titles = {"test", "change command"};
     private FragmentDrawerListener drawerListener;
 
     public FragmentDrawer() {

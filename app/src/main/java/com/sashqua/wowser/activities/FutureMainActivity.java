@@ -1,7 +1,10 @@
 package com.sashqua.wowser.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.widget.DrawerLayout;
 
@@ -12,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
@@ -86,6 +90,8 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
         drawerFragment.setDrawerListener(this);
+
+        displayView(0);
     }
 
     @Override
@@ -168,9 +174,32 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
         }
     }
 
+
     @Override
     public void onDrawerItemSelected(View view, int position) {
-        System.out.print("CLICKED");
+        displayView(position);
+    }
 
+    private void displayView(int position) {
+        Activity activity = null;
+        String title = getString(R.string.app_name);
+        switch (position) {
+            case 1:
+                activity = new TeamSelectionActivity();
+                break;
+            default:
+                break;
+        }
+
+        if (activity != null) {
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.container_body, activity);
+//            fragmentTransaction.commit();
+            Intent intent = new Intent(FutureMainActivity.this, activity.getClass());
+            startActivity(intent);
+            // set the toolbar title
+            getSupportActionBar().setTitle(title);
+        }
     }
 }
