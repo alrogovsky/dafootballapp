@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
