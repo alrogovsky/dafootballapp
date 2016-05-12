@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.widget.DrawerLayout;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,7 +34,7 @@ import com.sashqua.wowser.utils.StandingsAdapter;
 
 import java.util.ArrayList;
 
-public class FutureMainActivity extends NetBaseActivity {
+public class FutureMainActivity extends NetBaseActivity implements FragmentDrawer.FragmentDrawerListener {
 
     private long teamId;
     private String teamName;
@@ -45,6 +46,7 @@ public class FutureMainActivity extends NetBaseActivity {
     private LeagueTable leagueTable;
 
     private Drawer mDrawer;
+    private FragmentDrawer drawerFragment;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -90,6 +92,10 @@ public class FutureMainActivity extends NetBaseActivity {
 
         getData();
 
+        drawerFragment = (FragmentDrawer)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+        drawerFragment.setDrawerListener(this);
     }
 
 
@@ -257,5 +263,11 @@ public class FutureMainActivity extends NetBaseActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onDrawerItemSelected(View view, int position) {
+        System.out.print("CLICKED");
+
     }
 }

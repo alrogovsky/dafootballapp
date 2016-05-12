@@ -3,10 +3,8 @@ package com.sashqua.wowser.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class MainActivity extends NetBaseActivity implements FragmentDrawer.FragmentDrawerListener {
+public class MainActivity extends NetBaseActivity {
 
     private long teamId;
     private String teamName;
@@ -33,7 +31,6 @@ public class MainActivity extends NetBaseActivity implements FragmentDrawer.Frag
     private int resultsRequestId = -1;
     private FixtureList fixtures;
     private FixtureList results;
-    private FragmentDrawer drawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +52,6 @@ public class MainActivity extends NetBaseActivity implements FragmentDrawer.Frag
         tv1.setText(teamName);
 
         getFixtures();
-
-        drawerFragment = (FragmentDrawer)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
-        drawerFragment.setDrawerListener(this);
     }
 
     private void getFixtures() {
@@ -114,10 +106,5 @@ public class MainActivity extends NetBaseActivity implements FragmentDrawer.Frag
             drawFixtures();
 
         }
-    }
-
-    @Override
-    public void onDrawerItemSelected(View view, int position) {
-
     }
 }
