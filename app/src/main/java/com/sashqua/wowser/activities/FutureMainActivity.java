@@ -45,7 +45,7 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
     private FixtureList results;
     private LeagueTable leagueTable;
 
-    private Drawer mDrawer;
+//    private Drawer mDrawer;
     private FragmentDrawer drawerFragment;
 
     /**
@@ -73,7 +73,7 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
-        new DrawerBuilder().withActivity(this).build();
+//        new DrawerBuilder().withActivity(this).build();
 
         SharedPreferences sPref;
 
@@ -87,8 +87,8 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mDrawer = new DrawerBuilder().withActivity(this).build();
-        mDrawer.setSelection(1);
+//        mDrawer = new DrawerBuilder().withActivity(this).build();
+//        mDrawer.setSelection(1);
 
         getData();
 
