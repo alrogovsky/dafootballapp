@@ -42,6 +42,13 @@
             android:label="@string/title_activity_future_main"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <provider
+            android:name=".content.FootballContentProvider"
+            android:authorities="com.sashqua.wowser.dafootball.provider"
+            android:enabled="true"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>

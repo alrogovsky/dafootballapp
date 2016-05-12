@@ -10,6 +10,7 @@ import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.LeagueTable;
 import com.sashqua.wowser.models.Season;
 import com.sashqua.wowser.models.TeamList;
+import com.sashqua.wowser.utils.FootballApp;
 import com.sashqua.wowser.utils.Processor;
 
 import java.lang.reflect.Array;
@@ -28,7 +29,7 @@ public class NetService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        processor = new Processor();
+        processor = new Processor((FootballApp) getApplicationContext());
     }
 
     @Override
