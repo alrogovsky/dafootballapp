@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -47,6 +48,13 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
         ContentResolver contentResolver = getContentResolver();
         contentResolver.delete(CONTENT_URI, null, null);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("Choose your favourite team");
+            getSupportActionBar().setHomeButtonEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
 
         String[] from = new String[] {
                 TeamsContract.Teams.COLUMN_NAME_TEAM_NAME,
