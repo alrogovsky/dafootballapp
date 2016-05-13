@@ -25,8 +25,6 @@ import com.sashqua.wowser.fragments.ResultsFragment;
 import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.LeagueTable;
 
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
 
 public class FutureMainActivity extends NetBaseActivity implements FragmentDrawer.FragmentDrawerListener {
 
