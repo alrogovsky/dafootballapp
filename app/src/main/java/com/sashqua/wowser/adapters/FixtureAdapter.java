@@ -1,4 +1,4 @@
-package com.sashqua.wowser.utils;
+package com.sashqua.wowser.adapters;
 
 import android.content.Context;
 import java.util.ArrayList;

@@ -37,22 +37,8 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
     private FixtureList results;
     private LeagueTable leagueTable;
 
-//    private Drawer mDrawer;
     private FragmentDrawer drawerFragment;
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     @Override
@@ -150,7 +136,7 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
             if(position == 0){
                 return ResultsFragment.newInstance(teamName, fixtures, results);
             } else {
-                return StandingsFragment.newInstance(leagueTable);
+                return StandingsFragment.newInstance(leagueTable, teamName);
             }
 
         }
@@ -179,25 +165,14 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
     }
 
     private void displayView(int position) {
-        Activity activity = null;
-        String title = getString(R.string.app_name);
+//        String title = getString(R.string.app_name);
         switch (position) {
             case 1:
-                activity = new TeamSelectionActivity();
+                Intent intent = new Intent(FutureMainActivity.this, TeamSelectionActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
-        }
-
-        if (activity != null) {
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.container_body, activity);
-//            fragmentTransaction.commit();
-            Intent intent = new Intent(FutureMainActivity.this, activity.getClass());
-            startActivity(intent);
-            // set the toolbar title
-            getSupportActionBar().setTitle(title);
         }
     }
 }

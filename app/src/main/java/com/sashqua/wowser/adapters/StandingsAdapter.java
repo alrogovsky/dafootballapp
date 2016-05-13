@@ -1,6 +1,8 @@
-package com.sashqua.wowser.utils;
+package com.sashqua.wowser.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,11 @@ import java.util.ArrayList;
 
 public class StandingsAdapter extends ArrayAdapter<Standing> {
 
-    public StandingsAdapter(Context context, int resource, ArrayList<Standing> items) {
+    private String favouriteTeam;
+
+    public StandingsAdapter(Context context, int resource, ArrayList<Standing> items, String favouriteTeam) {
         super(context, resource, items);
+        this.favouriteTeam = favouriteTeam;
     }
 
     @Override
@@ -42,6 +47,10 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
             if (teamName != null) {
                 String teamWithPosition = String.valueOf(position+1) + ". " + s.getTeamName();
                 teamName.setText(teamWithPosition);
+                if(s.getTeamName().equals(favouriteTeam)){
+                    Log.d("KEK", s.getTeamName() + " / " + favouriteTeam + " / " + teamWithPosition);
+                    teamName.setTextColor(Color.RED);
+                }
             }
 
             if (played != null) {
