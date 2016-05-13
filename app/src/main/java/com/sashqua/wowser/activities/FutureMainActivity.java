@@ -170,6 +170,7 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
             case 1:
                 Intent intent = new Intent(FutureMainActivity.this, TeamSelectionActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;
