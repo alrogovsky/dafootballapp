@@ -66,8 +66,8 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
         if(toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("Choose your favourite team");
-            getSupportActionBar().setHomeButtonEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         String[] from = new String[] {
