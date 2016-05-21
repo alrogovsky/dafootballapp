@@ -1,5 +1,6 @@
 package com.sashqua.wowser.activities;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,11 +23,18 @@ public class LigueSelectionActivity extends NetBaseActivity {
 
     private int requestId = -1;
     private TeamList teams;
+    private ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_selection);
+
+        pd = new ProgressDialog(this);
+        pd.setTitle("Loading");
+        pd.setMessage("Wait a few seconds...");
+        pd.setIndeterminate(true);
+        pd.show();
         requestTeams();
     }
 
@@ -36,7 +44,7 @@ public class LigueSelectionActivity extends NetBaseActivity {
             teams = (TeamList) bundle.getSerializable("teams");
             updateTeams();
         }
-
+        pd.dismiss();
     }
 
     public void requestTeams(){

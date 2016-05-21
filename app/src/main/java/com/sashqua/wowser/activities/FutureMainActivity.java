@@ -1,16 +1,14 @@
 package com.sashqua.wowser.activities;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.widget.DrawerLayout;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +22,8 @@ import com.sashqua.wowser.fragments.StandingsFragment;
 import com.sashqua.wowser.fragments.ResultsFragment;
 import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.LeagueTable;
+
+import java.util.logging.Handler;
 
 
 public class FutureMainActivity extends NetBaseActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -40,6 +40,7 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
     private FragmentDrawer drawerFragment;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +68,13 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
 
 //        mDrawer = new DrawerBuilder().withActivity(this).build();
 //        mDrawer.setSelection(1);
+        pd = new ProgressDialog(this);
+        pd.setTitle("Loading");
+        pd.setMessage("Wait a few seconds...");
+        pd.setIndeterminate(true);
+        pd.show();
 
         getData();
-
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
@@ -100,7 +105,7 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
         return super.onOptionsItemSelected(item);
     }
 
-    private void getData() {
+    private void getData(){
         fixturesRequestId = getServiceHelper().getTeamNextFixtures(teamId);
         resultsRequestId = getServiceHelper().getTeamResults(teamId);
         leagueTableRequestId = getServiceHelper().getLeagueTable(398);
@@ -117,6 +122,7 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
         }
 
         mSectionsPagerAdapter.notifyDataSetChanged();
+        pd.dismiss();
     }
 
     /*********************** FRAGMENTS LOGIC ***********************/

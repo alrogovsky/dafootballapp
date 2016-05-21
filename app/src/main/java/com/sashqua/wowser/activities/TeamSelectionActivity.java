@@ -1,6 +1,7 @@
 package com.sashqua.wowser.activities;
 
 import android.app.LoaderManager;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -36,6 +37,7 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
     private final Uri CONTENT_URI = Uri.parse("content://com.sashqua.wowser.dafootball.provider/teams");
 
     private SimpleCursorAdapter simpleCursorAdapter;
+    private ProgressDialog pd;
 
 
     SharedPreferences sPref;
@@ -81,6 +83,11 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
 
         lv.setAdapter(simpleCursorAdapter);
 
+        pd = new ProgressDialog(this);
+        pd.setTitle("Loading");
+        pd.setMessage("Wait a few seconds...");
+        pd.setIndeterminate(true);
+        pd.show();
         requestTeams();
 
     }
@@ -91,7 +98,7 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
             teamlist = (TeamList) bundle.getSerializable("teams");
             getLoaderManager().initLoader(LOADER_ID, null, this);
         }
-
+        pd.dismiss();
     }
 
     public void requestTeams(){
