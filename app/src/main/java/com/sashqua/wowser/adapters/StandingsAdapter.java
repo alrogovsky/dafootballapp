@@ -64,7 +64,7 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
                 if(s.getTeamName().equals(favouriteTeam)){
                     holder.teamName.setTextColor(Color.RED);
                 } else {
-                    holder.teamName.setTextColor(Color.BLACK);
+                    holder.teamName.setTextColor(Color.WHITE);
                 }
             }
 

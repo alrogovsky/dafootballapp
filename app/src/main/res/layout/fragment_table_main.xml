@@ -18,6 +18,7 @@
         android:src="@drawable/bg" />
 
     <TextView
+        android:textColor="@color/whiteText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/standings_text"
@@ -113,8 +114,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView4"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/tableHeader"
         android:cacheColorHint="#ffffff"
-        style="@style/CodeFont"/>
+        style="@style/CodeFont"
+        android:layout_below="@+id/tableHeader"
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>
