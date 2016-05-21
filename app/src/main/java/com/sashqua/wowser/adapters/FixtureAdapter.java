@@ -22,6 +22,15 @@ public class FixtureAdapter extends ArrayAdapter<Fixture> {
         this.isResults = isResults;
     }
 
+    static class ViewHolder {
+        TextView homeTeamName;
+        TextView score;
+        TextView awayTeamName;
+    }
+
+    private LayoutInflater vi = LayoutInflater.from(getContext());
+    private ViewHolder holder;
+
     public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items) {
         super(context, resource, items);
     }
@@ -32,23 +41,25 @@ public class FixtureAdapter extends ArrayAdapter<Fixture> {
         View v = convertView;
 
         if (v == null) {
-            LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.listview_fixture_item, null);
+            holder = new ViewHolder();
+            holder.homeTeamName = (TextView) v.findViewById(R.id.fixtureTeamHome);
+            holder.score = (TextView) v.findViewById(R.id.fixtureScore);
+            holder.awayTeamName = (TextView) v.findViewById(R.id.fixtureTeamAway);
+            v.setTag(holder);
+        } else {
+            holder = (ViewHolder) v.getTag();
         }
 
         Fixture f = getItem(position);
 
         if (f != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.fixtureTeamHome);
-            TextView tt2 = (TextView) v.findViewById(R.id.fixtureScore);
-            TextView tt3 = (TextView) v.findViewById(R.id.fixtureTeamAway);
 
-            if (tt1 != null) {
-                tt1.setText(f.getHomeTeamName());
+            if (holder.homeTeamName != null) {
+                holder.homeTeamName.setText(f.getHomeTeamName());
             }
 
-            if (tt2 != null) {
+            if (holder.score != null) {
                 String scoreStr;
                 if(isResults) {
                     scoreStr = f.getResult().getGoalsHomeTeam() + "-" + f.getResult().getGoalsAwayTeam();
@@ -56,11 +67,11 @@ public class FixtureAdapter extends ArrayAdapter<Fixture> {
                     scoreStr = " - ";
                 }
 
-                tt2.setText(scoreStr);
+                holder.score.setText(scoreStr);
             }
 
-            if (tt3 != null) {
-                tt3.setText(f.getAwayTeamName());
+            if (holder.awayTeamName != null) {
+                holder.awayTeamName.setText(f.getAwayTeamName());
             }
         }
 

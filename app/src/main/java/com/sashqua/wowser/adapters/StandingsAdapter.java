@@ -18,6 +18,18 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
 
     private String favouriteTeam;
 
+    static class ViewHolder {
+        TextView teamName;
+        TextView played;
+        TextView wins;
+        TextView draws;
+        TextView losses;
+        TextView points;
+    }
+
+    private LayoutInflater vi = LayoutInflater.from(getContext());
+    private ViewHolder holder;
+
     public StandingsAdapter(Context context, int resource, ArrayList<Standing> items, String favouriteTeam) {
         super(context, resource, items);
         this.favouriteTeam = favouriteTeam;
@@ -29,50 +41,51 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
         View v = convertView;
 
         if (v == null) {
-            LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
             v = vi.inflate(R.layout.listview_table_item, null);
+            holder = new ViewHolder();
+            holder.teamName = (TextView) v.findViewById(R.id.tableTeamName);
+            holder.played = (TextView) v.findViewById(R.id.tableTeamPlayed);
+            holder.wins = (TextView) v.findViewById(R.id.tableTeamWins);
+            holder.draws = (TextView) v.findViewById(R.id.tableTeamDraws);
+            holder.losses = (TextView) v.findViewById(R.id.tableTeamLosses);
+            holder.points = (TextView) v.findViewById(R.id.tableTeamPoints);
+            v.setTag(holder);
+        } else {
+            holder = (ViewHolder) v.getTag();
         }
 
         Standing s = getItem(position);
 
         if (s != null) {
-            TextView teamName = (TextView) v.findViewById(R.id.tableTeamName);
-            TextView played = (TextView) v.findViewById(R.id.tableTeamPlayed);
-            TextView wins = (TextView) v.findViewById(R.id.tableTeamWins);
-            TextView draws = (TextView) v.findViewById(R.id.tableTeamDraws);
-            TextView losses = (TextView) v.findViewById(R.id.tableTeamLosses);
-            TextView points = (TextView) v.findViewById(R.id.tableTeamPoints);
 
-            if (teamName != null) {
+            if (holder.teamName != null) {
                 String teamWithPosition = String.valueOf(position+1) + ". " + s.getTeamName();
-                teamName.setText(teamWithPosition);
+                holder.teamName.setText(teamWithPosition);
                 if(s.getTeamName().equals(favouriteTeam)){
-                    Log.d("KEK", s.getTeamName() + " / " + favouriteTeam + " / " + teamWithPosition);
-                    teamName.setTextColor(Color.RED);
+                    holder.teamName.setTextColor(Color.RED);
                 } else {
-                    teamName.setTextColor(Color.BLACK);
+                    holder.teamName.setTextColor(Color.BLACK);
                 }
             }
 
-            if (played != null) {
-                played.setText(String.valueOf(s.getPlayedGames()));
+            if (holder.played != null) {
+                holder.played.setText(String.valueOf(s.getPlayedGames()));
             }
 
-            if (wins != null) {
-                wins.setText(String.valueOf(s.getWins()));
+            if (holder.wins != null) {
+                holder.wins.setText(String.valueOf(s.getWins()));
             }
 
-            if (draws != null) {
-                draws.setText(String.valueOf(s.getDraws()));
+            if (holder.draws != null) {
+                holder.draws.setText(String.valueOf(s.getDraws()));
             }
 
-            if (losses != null) {
-                losses.setText(String.valueOf(s.getLosses()));
+            if (holder.losses != null) {
+                holder.losses.setText(String.valueOf(s.getLosses()));
             }
 
-            if (points != null) {
-                points.setText(String.valueOf(s.getPoints()));
+            if (holder.points != null) {
+                holder.points.setText(String.valueOf(s.getPoints()));
             }
         }
 
