@@ -24,7 +24,7 @@
         android:id="@+id/teamName"
         android:textStyle="bold"
         android:textColor="#ffffff"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="10dp"
         android:textSize="20dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
