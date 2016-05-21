@@ -5,14 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.FutureMainActivity"
-    android:background="#AAAAAA"
     android:clickable="false">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg" />
+
 
     <TextView
         android:text="YOUR FAVOURITE TEAM IS"
@@ -59,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listView2"
-            android:background="#30323e"
             android:layout_below="@+id/textView4"
             android:layout_centerHorizontal="true" />
 
@@ -78,8 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listView3"
-            android:layout_gravity="center_horizontal"
-            android:background="#30323e" />
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 
