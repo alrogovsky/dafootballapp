@@ -2,6 +2,7 @@ package com.sashqua.wowser.models;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
 public class Team implements Serializable {
     private long id;
     private String name;
