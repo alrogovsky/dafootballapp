@@ -35,7 +35,7 @@
 
     <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
         <item name="colorAccent">@color/yellow</item>
-        <item name="android:textColorSecondary">@color/yellow</item>
+        <item name="android:textColorSecondary">@color/whiteText</item>
     </style>
 
 </resources>
