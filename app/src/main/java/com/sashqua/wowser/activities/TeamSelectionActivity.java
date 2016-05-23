@@ -68,7 +68,7 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
 
         simpleCursorAdapter = new SimpleCursorAdapter(
                 getApplicationContext(),
-                android.R.layout.simple_list_item_single_choice,
+                R.layout.radiobutton,
                 null, from, to, 0
         );
 

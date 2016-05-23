@@ -30,7 +30,7 @@ public class FragmentDrawer extends Fragment {
     private DrawerLayout mDrawerLayout;
     private NavigationDrawerAdapter adapter;
     private View containerView;
-    private static String[] titles = {"test", "Change favourite team"};
+    private static String[] titles;
     private FragmentDrawerListener drawerListener;
 
     public FragmentDrawer() {
@@ -59,7 +59,7 @@ public class FragmentDrawer extends Fragment {
         super.onCreate(savedInstanceState);
 
         // drawer labels
-//        titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
+        titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
     }
 
     @Override
