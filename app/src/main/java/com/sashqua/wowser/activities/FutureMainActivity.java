@@ -1,6 +1,7 @@
 package com.sashqua.wowser.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -52,8 +53,6 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
-//        new DrawerBuilder().withActivity(this).build();
-
         SharedPreferences sPref;
 
         sPref = getSharedPreferences("TEST", MODE_PRIVATE);
@@ -66,14 +65,9 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-//        mDrawer = new DrawerBuilder().withActivity(this).build();
-//        mDrawer.setSelection(1);
         pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
         pd.setTitle("Please wait");
         pd.setMessage("Loading data...");
-//        pd.setProgressStyle(R.style.ProgressBar);
-//        pd.setProgressStyle(R.style.AppCompatAlertDialogStyle);
-//        pd.setIndeterminate(true);
         pd.show();
 
         getData();

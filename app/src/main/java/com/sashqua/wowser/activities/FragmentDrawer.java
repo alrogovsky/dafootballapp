@@ -1,6 +1,7 @@
 package com.sashqua.wowser.activities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.R;
 import com.sashqua.wowser.adapters.NavigationDrawerAdapter;
 import com.sashqua.wowser.models.NavDrawerItem;
@@ -57,9 +59,17 @@ public class FragmentDrawer extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sPref;
+        Context cont = this.getContext();
+        sPref = cont.getSharedPreferences("TEST", Context.MODE_PRIVATE);
+        String teamName = sPref.getString(Constants.Data.SAVED_TEAM_NAME, "ERROR");
 
-        // drawer labels
-        titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
+        String[] str = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
+        titles = new String[str.length + 1];
+        titles[0] = teamName;
+        for(int i = 0; i < str.length; i++) {
+            titles[i + 1] = str[i];
+        }
     }
 
     @Override

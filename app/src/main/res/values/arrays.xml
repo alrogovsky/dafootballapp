@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="nav_drawer_labels">
-        <item>I am true-hearted!</item>
-        <item>Change favourite team</item>
+        <item>Change Team</item>
     </string-array>
 </resources>
