@@ -83,11 +83,11 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
 
         lv.setAdapter(simpleCursorAdapter);
 
-        pd = new ProgressDialog(this);
-        pd.setTitle("Loading");
-        pd.setMessage("Wait a few seconds...");
-        pd.setIndeterminate(true);
+        pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
+        pd.setTitle("Please wait");
+        pd.setMessage("Loading data...");
         pd.show();
+
         requestTeams();
 
     }

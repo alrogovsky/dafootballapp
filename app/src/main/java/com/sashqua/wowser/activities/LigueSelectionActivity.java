@@ -30,11 +30,11 @@ public class LigueSelectionActivity extends NetBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_selection);
 
-        pd = new ProgressDialog(this);
-        pd.setTitle("Loading");
-        pd.setMessage("Wait a few seconds...");
-        pd.setIndeterminate(true);
+        pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
+        pd.setTitle("Please wait");
+        pd.setMessage("Loading data...");
         pd.show();
+
         requestTeams();
     }
 

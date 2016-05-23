@@ -68,10 +68,12 @@ public class FutureMainActivity extends NetBaseActivity implements FragmentDrawe
 
 //        mDrawer = new DrawerBuilder().withActivity(this).build();
 //        mDrawer.setSelection(1);
-        pd = new ProgressDialog(this);
-        pd.setTitle("Loading");
-        pd.setMessage("Wait a few seconds...");
-        pd.setIndeterminate(true);
+        pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
+        pd.setTitle("Please wait");
+        pd.setMessage("Loading data...");
+//        pd.setProgressStyle(R.style.ProgressBar);
+//        pd.setProgressStyle(R.style.AppCompatAlertDialogStyle);
+//        pd.setIndeterminate(true);
         pd.show();
 
         getData();
