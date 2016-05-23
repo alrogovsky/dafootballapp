@@ -11,7 +11,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:theme="@style/toolbar_theme"
         >
 
         <android.support.v7.widget.Toolbar
@@ -20,7 +20,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/yellow"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="@color/colorPrimary"/>
+            app:titleTextColor="@color/colorPrimary"
+        />
 
     </android.support.design.widget.AppBarLayout>
 
