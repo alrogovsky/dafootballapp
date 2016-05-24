@@ -10,6 +10,12 @@
     android:clickable="true"
     android:nestedScrollingEnabled="false">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -21,7 +27,8 @@
         android:choiceMode="singleChoice"
         android:layout_above="@+id/buttonSelectTeam"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:divider="@color/yellow"/>
 
 
     <!--<TextView-->
@@ -49,7 +56,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_boarder"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/whiteText"
         android:onClick="makeChoice" />
 
 </RelativeLayout>
