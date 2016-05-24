@@ -1,22 +1,21 @@
 package com.sashqua.wowser.activities;
 
 import android.app.LoaderManager;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sashqua.wowser.Constants;
@@ -26,8 +25,6 @@ import com.sashqua.wowser.content.contracts.TeamsContract;
 import com.sashqua.wowser.models.Team;
 import com.sashqua.wowser.models.TeamList;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeamSelectionActivity extends NetBaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -40,26 +37,26 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
     private final Uri CONTENT_URI = Uri.parse("content://com.sashqua.wowser.dafootball.provider/teams");
 
     private SimpleCursorAdapter simpleCursorAdapter;
+    private ProgressDialog pd;
 
 
     SharedPreferences sPref;
-
-//    public View getViewByPosition(int pos, ListView listView) {
-//        final int firstListItemPosition = listView.getFirstVisiblePosition();
-//        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
-//
-//        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
-//            return listView.getAdapter().getView(pos, null, listView);
-//        } else {
-//            final int childIndex = pos - firstListItemPosition;
-//            return listView.getChildAt(childIndex);
-//        }
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_selection);
+
+        ContentResolver contentResolver = getContentResolver();
+        contentResolver.delete(CONTENT_URI, null, null);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("Choose your favourite team");
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         String[] from = new String[] {
                 TeamsContract.Teams.COLUMN_NAME_TEAM_NAME,
@@ -71,7 +68,7 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
 
         simpleCursorAdapter = new SimpleCursorAdapter(
                 getApplicationContext(),
-                android.R.layout.simple_list_item_single_choice,
+                R.layout.radiobutton,
                 null, from, to, 0
         );
 
@@ -86,6 +83,11 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
 
         lv.setAdapter(simpleCursorAdapter);
 
+        pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
+        pd.setTitle("Please wait");
+        pd.setMessage("Loading data...");
+        pd.show();
+
         requestTeams();
 
     }
@@ -94,11 +96,9 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
     public void onServiceCallback(int requestId, int resultCode, Bundle bundle){
         if (requestId == this.requestId && resultCode == Constants.Codes.CODE_OK) {
             teamlist = (TeamList) bundle.getSerializable("teams");
-//            updateTeams();
-            Log.d("KEK", "INIT LOADER");
             getLoaderManager().initLoader(LOADER_ID, null, this);
         }
-
+        pd.dismiss();
     }
 
     public void requestTeams(){
@@ -151,15 +151,12 @@ public class TeamSelectionActivity extends NetBaseActivity implements LoaderMana
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d("KEK", "SOZDAU LOADER");
         if (id == LOADER_ID) {
-            Log.d("KEK", "SOZDAL LOADER");
             return new CursorLoader(getApplicationContext(), CONTENT_URI, new String[]{
                     "_ID",
                     TeamsContract.Teams.COLUMN_NAME_TEAM_NAME,
             }, null, null, TeamsContract.Teams.COLUMN_NAME_TEAM_NAME + " ASC");
         }
-        Log.d("KEK", "XUEVO");
         return null;
     }
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:clickable="true">
+
+    <!-- icon -->
+    <ImageView
+        android:id="@+id/item_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:contentDescription="icon"
+        android:src="@drawable/item_icon"
+        />
+
+    <!-- title -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/item_icon"
+        android:layout_alignBaseline="@+id/item_icon"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:textSize="22dp" />
+
+</RelativeLayout>
+
+
+
+<!--<TextView-->
+<!--android:id="@+id/title"-->
+<!--android:layout_width="fill_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:paddingLeft="30dp"-->
+<!--android:paddingTop="10dp"-->
+<!--android:paddingBottom="10dp"-->
+<!--android:textSize="20sp"-->
+<!--android:textColor="@color/black"-->
+<!--android:textStyle="bold" />-->

@@ -1,16 +1,20 @@
 package com.sashqua.wowser.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.widget.DrawerLayout;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.sashqua.wowser.Constants;
 import com.sashqua.wowser.NetBaseActivity;
@@ -20,10 +24,10 @@ import com.sashqua.wowser.fragments.ResultsFragment;
 import com.sashqua.wowser.models.FixtureList;
 import com.sashqua.wowser.models.LeagueTable;
 
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
+import java.util.logging.Handler;
 
-public class FutureMainActivity extends NetBaseActivity {
+
+public class FutureMainActivity extends NetBaseActivity implements FragmentDrawer.FragmentDrawerListener {
 
     private long teamId;
     private String teamName;
@@ -34,22 +38,10 @@ public class FutureMainActivity extends NetBaseActivity {
     private FixtureList results;
     private LeagueTable leagueTable;
 
-    private Drawer mDrawer;
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    private FragmentDrawer drawerFragment;
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+    private ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +52,6 @@ public class FutureMainActivity extends NetBaseActivity {
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-
-        new DrawerBuilder().withActivity(this).build();
 
         SharedPreferences sPref;
 
@@ -75,36 +65,43 @@ public class FutureMainActivity extends NetBaseActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mDrawer = new DrawerBuilder().withActivity(this).build();
-        mDrawer.setSelection(1);
+        pd = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
+        pd.setTitle("Please wait");
+        pd.setMessage("Loading data...");
+        pd.show();
 
         getData();
+        drawerFragment = (FragmentDrawer)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+        drawerFragment.setDrawerListener(this);
 
+        displayView(0);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_future_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_future_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+////        if (id == R.id.action_settings) {
+////            return true;
+////        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void getData() {
+    private void getData(){
         fixturesRequestId = getServiceHelper().getTeamNextFixtures(teamId);
         resultsRequestId = getServiceHelper().getTeamResults(teamId);
         leagueTableRequestId = getServiceHelper().getLeagueTable(398);
@@ -121,6 +118,7 @@ public class FutureMainActivity extends NetBaseActivity {
         }
 
         mSectionsPagerAdapter.notifyDataSetChanged();
+        pd.dismiss();
     }
 
     /*********************** FRAGMENTS LOGIC ***********************/
@@ -140,7 +138,7 @@ public class FutureMainActivity extends NetBaseActivity {
             if(position == 0){
                 return ResultsFragment.newInstance(teamName, fixtures, results);
             } else {
-                return StandingsFragment.newInstance(leagueTable);
+                return StandingsFragment.newInstance(leagueTable, teamName);
             }
 
         }
@@ -159,6 +157,25 @@ public class FutureMainActivity extends NetBaseActivity {
                     return "Standings";
             }
             return null;
+        }
+    }
+
+
+    @Override
+    public void onDrawerItemSelected(View view, int position) {
+        displayView(position);
+    }
+
+    private void displayView(int position) {
+//        String title = getString(R.string.app_name);
+        switch (position) {
+            case 1:
+                Intent intent = new Intent(FutureMainActivity.this, TeamSelectionActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                break;
         }
     }
 }

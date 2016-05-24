@@ -68,7 +68,6 @@ public class Processor {
                 contentValues.put(TeamsContract.Teams.COLUMN_NAME_SHORT_NAME, team.getShortName());
 
                 context.getContentResolver().insert(CONTENT_URI, contentValues);
-                Log.d("KEK", "ZAPISAL V BAZU KEK");
             }
 
             return teams;

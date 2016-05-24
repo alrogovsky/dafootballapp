@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.sashqua.wowser.R;
 import com.sashqua.wowser.models.FixtureList;
-import com.sashqua.wowser.utils.FixtureAdapter;
+import com.sashqua.wowser.adapters.FixtureAdapter;
 
 public class ResultsFragment extends Fragment {
 
