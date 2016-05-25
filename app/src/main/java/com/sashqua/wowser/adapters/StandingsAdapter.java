@@ -38,9 +38,11 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
+        Standing s = getItem(position);
 
         ViewHolder holder;
         if (v == null) {
+
             v = vi.inflate(R.layout.listview_table_item, null);
             holder = new ViewHolder();
             holder.teamName = (TextView) v.findViewById(R.id.tableTeamName);
@@ -54,39 +56,33 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
             holder = (ViewHolder) v.getTag();
         }
 
-        Standing s = getItem(position);
-
         if (s != null) {
 
-            if (holder.teamName != null) {
-                String teamWithPosition = String.valueOf(position+1) + ". " + s.getTeamName();
-                holder.teamName.setText(teamWithPosition);
-                if(s.getTeamName().equals(favouriteTeam)){
-                    holder.teamName.setTextColor(getContext().getResources().getColor(R.color.red));
-                } else {
-                    holder.teamName.setTextColor(getContext().getResources().getColor(R.color.whiteText));
-                }
+            boolean isFavourite = s.getTeamName().equals(favouriteTeam);
+
+            int ourColor;
+
+            if(isFavourite){
+                ourColor = getContext().getResources().getColor(R.color.red);
+            } else {
+                ourColor = getContext().getResources().getColor(R.color.whiteText);
             }
 
-            if (holder.played != null) {
-                holder.played.setText(String.valueOf(s.getPlayedGames()));
-            }
+            holder.teamName.setTextColor(ourColor);
+            holder.played.setTextColor(ourColor);
+            holder.wins.setTextColor(ourColor);
+            holder.draws.setTextColor(ourColor);
+            holder.losses.setTextColor(ourColor);
+            holder.points.setTextColor(ourColor);
 
-            if (holder.wins != null) {
-                holder.wins.setText(String.valueOf(s.getWins()));
-            }
+            String teamWithPosition = String.valueOf(position+1) + ". " + s.getTeamName();
 
-            if (holder.draws != null) {
-                holder.draws.setText(String.valueOf(s.getDraws()));
-            }
-
-            if (holder.losses != null) {
-                holder.losses.setText(String.valueOf(s.getLosses()));
-            }
-
-            if (holder.points != null) {
-                holder.points.setText(String.valueOf(s.getPoints()));
-            }
+            holder.teamName.setText(teamWithPosition);
+            holder.played.setText(String.valueOf(s.getPlayedGames()));
+            holder.wins.setText(String.valueOf(s.getWins()));
+            holder.draws.setText(String.valueOf(s.getDraws()));
+            holder.losses.setText(String.valueOf(s.getLosses()));
+            holder.points.setText(String.valueOf(s.getPoints()));
         }
 
         return v;
