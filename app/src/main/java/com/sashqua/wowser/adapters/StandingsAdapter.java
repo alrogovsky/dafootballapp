@@ -28,7 +28,6 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
     }
 
     private LayoutInflater vi = LayoutInflater.from(getContext());
-    private ViewHolder holder;
 
     public StandingsAdapter(Context context, int resource, ArrayList<Standing> items, String favouriteTeam) {
         super(context, resource, items);
@@ -40,6 +39,7 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
 
         View v = convertView;
 
+        ViewHolder holder;
         if (v == null) {
             v = vi.inflate(R.layout.listview_table_item, null);
             holder = new ViewHolder();
@@ -62,9 +62,9 @@ public class StandingsAdapter extends ArrayAdapter<Standing> {
                 String teamWithPosition = String.valueOf(position+1) + ". " + s.getTeamName();
                 holder.teamName.setText(teamWithPosition);
                 if(s.getTeamName().equals(favouriteTeam)){
-                    holder.teamName.setTextColor(Color.RED);
+                    holder.teamName.setTextColor(getContext().getResources().getColor(R.color.red));
                 } else {
-                    holder.teamName.setTextColor(Color.WHITE);
+                    holder.teamName.setTextColor(getContext().getResources().getColor(R.color.whiteText));
                 }
             }
 

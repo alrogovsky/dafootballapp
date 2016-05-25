@@ -29,7 +29,6 @@ public class FixtureAdapter extends ArrayAdapter<Fixture> {
     }
 
     private LayoutInflater vi = LayoutInflater.from(getContext());
-    private ViewHolder holder;
 
     public FixtureAdapter(Context context, int resource, ArrayList<Fixture> items) {
         super(context, resource, items);
@@ -40,6 +39,7 @@ public class FixtureAdapter extends ArrayAdapter<Fixture> {
 
         View v = convertView;
 
+        ViewHolder holder;
         if (v == null) {
             v = vi.inflate(R.layout.listview_fixture_item, null);
             holder = new ViewHolder();
